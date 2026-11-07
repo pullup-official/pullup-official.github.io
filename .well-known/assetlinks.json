@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.clawsj.pullup",
+      "sha256_cert_fingerprints": [
+        "33:E8:61:76:1F:7D:71:39:C8:7A:3C:D8:F8:B8:0F:20:55:23:34:84:30:D3:D0:F1:7C:59:E8:80:25:7E:BA:0A",
+        "D0:6C:40:CD:E9:99:1C:A1:B8:E9:35:CD:D2:6F:56:D1:08:58:42:DC:F4:42:D2:E7:06:CA:CB:1A:F7:24:25:96"
+      ]
+    }
+  }
+]
