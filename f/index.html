@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>PULLUP 加好友</title>
+<meta property="og:title" content="PULLUP｜朋友邀請你加好友">
+<meta property="og:description" content="點開用 PULLUP 加好友，或在好友星球輸入好友代碼">
+<style>
+/* 極簡黑底，比照房間邀請頁（../r/） */
+:root {
+  --bg: #0b0b0d;
+  --text: #f2f2f2;
+  --muted: #8a8a92;
+  --line: #2a2a30;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+}
+main { width: 100%; max-width: 360px; padding: 48px 24px; text-align: center; }
+.brand { font-size: 30px; font-weight: 900; letter-spacing: 8px; margin: 0; }
+.lead { color: var(--muted); font-size: 15px; margin: 28px 0 10px; }
+/* 好友代碼比房號長（PULLUP-＋12 碼），字小一點、可以換行 */
+.code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  word-break: break-all;
+  margin: 0 0 32px;
+}
+.open {
+  display: block;
+  background: #fff;
+  color: #000;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-decoration: none;
+  border-radius: 12px;
+  padding: 17px 0;
+}
+.hint { color: var(--muted); font-size: 13px; line-height: 1.8; margin: 28px 0 0; padding-top: 20px; border-top: 1px solid var(--line); }
+.hidden { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <p class="brand">PULLUP</p>
+  <p class="lead">朋友邀請你加好友</p>
+  <p class="code" id="code">------</p>
+  <!-- Android：intent 連結叫起 PULLUP（LINE 等 app 的內建瀏覽器不會自動跳 app，靠這顆按鈕）。iPhone、電腦不顯示 -->
+  <a class="open hidden" id="open" href="#">用 PULLUP 打開</a>
+  <p class="hint">還沒有 PULLUP？即將在 Google Play 上架<br>裝好、註冊完，回來再點一次這個連結就能加好友</p>
+</main>
+<script>
+(function () {
+  // 好友代碼：12 碼英文數字（不含 PULLUP-，帶了也接受；見 app 的 friend_service.dart），其他一律不顯示
+  var raw = (new URLSearchParams(window.location.search).get('c') || '').trim().toUpperCase();
+  if (raw.indexOf('PULLUP-') === 0) raw = raw.slice(7);
+  if (!/^[A-Z0-9]{12}$/.test(raw)) return;
+  document.getElementById('code').textContent = 'PULLUP-' + raw;
+  if (/Android/i.test(navigator.userAgent)) {
+    var open = document.getElementById('open');
+    open.href = 'intent://pullup-official.github.io/f/?c=' + raw +
+      '#Intent;scheme=https;package=com.clawsj.pullup;end';
+    open.classList.remove('hidden');
+  }
+})();
+</script>
+</body>
+</html>
